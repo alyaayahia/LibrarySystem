@@ -9,12 +9,12 @@ using MediatR;
 
 namespace LibrarySystem.Application.Features.Books.Commands.CreateBook;
 
-public class CreateBookHandler
+public class CreateBookCommandHandler
     : IRequestHandler<CreateBookCommand, Guid>
 {
     private readonly IBookRepository _bookRepository;
 
-    public CreateBookHandler(
+    public CreateBookCommandHandler(
         IBookRepository bookRepository)
     {
         _bookRepository = bookRepository;

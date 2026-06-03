@@ -1,5 +1,7 @@
 
 using LibrarySystem.Infrastructure.DependencyInjection;
+using LibrarySystem.Application.Features.Books.Commands.CreateBook;
+using MediatR;
 namespace LibrarySystem.API
 {
     public class Program
@@ -15,7 +17,11 @@ namespace LibrarySystem.API
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
+            builder.Services.AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssembly(
+                    typeof(CreateBookCommand).Assembly);
+            });
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
