@@ -21,7 +21,9 @@ public class Member
     public bool IsActive { get; private set; }
 
     public bool IsDeleted { get; private set; }
-
+    private Member()
+    {
+    }
     public Member(
         string name,
         string email,

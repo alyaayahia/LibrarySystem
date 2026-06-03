@@ -27,7 +27,9 @@ public class Book
     public DateTime CreatedAt { get; private set; }
 
     public bool IsDeleted { get; private set; }
-
+    private Book()
+    {
+    }
     public Book(
         string title,
         string author,

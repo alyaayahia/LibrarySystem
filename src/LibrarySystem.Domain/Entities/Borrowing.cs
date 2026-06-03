@@ -27,7 +27,9 @@ public class Borrowing
     public Book? Book { get; private set; }
 
     public Member? Member { get; private set; }
-
+    private Borrowing()
+    {
+    }
     public Borrowing(Guid bookId, Guid memberId)
     {
         if (bookId == Guid.Empty)
