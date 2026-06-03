@@ -21,4 +21,13 @@ public class LibraryDbContext : DbContext
     public DbSet<Member> Members { get; set; }
 
     public DbSet<Borrowing> Borrowings { get; set; }
+
+    protected override void OnModelCreating(
+        ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly(
+            typeof(LibraryDbContext).Assembly);
+
+        base.OnModelCreating(modelBuilder);
+    }
 }
