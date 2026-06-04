@@ -1,4 +1,5 @@
 ﻿using LibrarySystem.Application.Features.Members.Commands.CreateMember;
+using LibrarySystem.Application.Features.Members.Queries.GetAllMembers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,5 +24,14 @@ public class MembersController : ControllerBase
             await _mediator.Send(command);
 
         return Ok(memberId);
+    }
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var members =
+            await _mediator.Send(
+                new GetAllMembersQuery());
+
+        return Ok(members);
     }
 }
