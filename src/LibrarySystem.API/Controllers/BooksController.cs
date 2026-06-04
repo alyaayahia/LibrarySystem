@@ -1,6 +1,7 @@
 ﻿using LibrarySystem.Application.Features.Books.Commands.CreateBook;
 using LibrarySystem.Application.Features.Books.Queries.GetAllBooks;
 using LibrarySystem.Application.Features.Books.Queries.GetBookById;
+using LibrarySystem.Application.Features.Books.Commands.UpdateBook;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -47,5 +48,21 @@ public class BooksController : ControllerBase
             return NotFound();
 
         return Ok(book);
+    }
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(
+    Guid id,
+    UpdateBookCommand command)
+    {
+        if (id != command.Id)
+            return BadRequest();
+
+        var result =
+            await _mediator.Send(command);
+
+        if (!result)
+            return NotFound();
+
+        return NoContent();
     }
 }
