@@ -1,6 +1,7 @@
 ﻿using LibrarySystem.Application.Features.Members.Commands.CreateMember;
 using LibrarySystem.Application.Features.Members.Queries.GetAllMembers;
 using LibrarySystem.Application.Features.Members.Queries.GetMemberById;
+using LibrarySystem.Application.Features.Members.Commands.DeactivateMember;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -46,5 +47,18 @@ public class MembersController : ControllerBase
             return NotFound();
 
         return Ok(member);
+    }
+    [HttpPut("{id}/deactivate")]
+    public async Task<IActionResult> Deactivate(
+    Guid id)
+    {
+        var result =
+            await _mediator.Send(
+                new DeactivateMemberCommand(id));
+
+        if (!result)
+            return NotFound();
+
+        return NoContent();
     }
 }
