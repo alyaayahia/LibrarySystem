@@ -2,6 +2,7 @@
 using LibrarySystem.Application.Features.Books.Queries.GetAllBooks;
 using LibrarySystem.Application.Features.Books.Queries.GetBookById;
 using LibrarySystem.Application.Features.Books.Commands.UpdateBook;
+using LibrarySystem.Application.Features.Books.Commands.DeleteBook;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -59,6 +60,18 @@ public class BooksController : ControllerBase
 
         var result =
             await _mediator.Send(command);
+
+        if (!result)
+            return NotFound();
+
+        return NoContent();
+    }
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        var result =
+            await _mediator.Send(
+                new DeleteBookCommand(id));
 
         if (!result)
             return NotFound();

@@ -24,12 +24,15 @@ public class BookRepository : IBookRepository
     public async Task<Book?> GetByIdAsync(Guid id)
     {
         return await _dbContext.Books
-            .FirstOrDefaultAsync(x => x.Id == id);
+            .FirstOrDefaultAsync(x =>
+                x.Id == id &&
+                !x.IsDeleted);
     }
 
     public async Task<List<Book>> GetAllAsync()
     {
         return await _dbContext.Books
+            .Where(book => !book.IsDeleted)
             .ToListAsync();
     }
 
@@ -49,7 +52,7 @@ public class BookRepository : IBookRepository
 
     public async Task DeleteAsync(Book book)
     {
-        _dbContext.Books.Remove(book);
+        book.Delete();
 
         await _dbContext.SaveChangesAsync();
     }
