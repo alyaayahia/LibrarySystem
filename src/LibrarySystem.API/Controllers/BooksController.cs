@@ -1,4 +1,5 @@
 ﻿using LibrarySystem.Application.Features.Books.Commands.CreateBook;
+using LibrarySystem.Application.Features.Books.Queries.GetAllBooks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,5 +24,14 @@ public class BooksController : ControllerBase
             await _mediator.Send(command);
 
         return Ok(bookId);
+    }
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var books =
+            await _mediator.Send(
+                new GetAllBooksQuery());
+
+        return Ok(books);
     }
 }
