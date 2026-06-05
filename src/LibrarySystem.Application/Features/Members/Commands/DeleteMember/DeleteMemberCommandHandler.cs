@@ -1,26 +1,26 @@
-﻿using System;
+﻿using LibrarySystem.Application.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LibrarySystem.Application.Interfaces;
 using MediatR;
 
-namespace LibrarySystem.Application.Features.Members.Commands.DeactivateMember;
+namespace LibrarySystem.Application.Features.Members.Commands.DeleteMember;
 
-public class DeactivateMemberCommandHandler
-    : IRequestHandler<DeactivateMemberCommand, bool>
+public class DeleteMemberCommandHandler
+    : IRequestHandler<DeleteMemberCommand, bool>
 {
     private readonly IMemberRepository _memberRepository;
 
-    public DeactivateMemberCommandHandler(
+    public DeleteMemberCommandHandler(
         IMemberRepository memberRepository)
     {
         _memberRepository = memberRepository;
     }
 
     public async Task<bool> Handle(
-        DeactivateMemberCommand request,
+        DeleteMemberCommand request,
         CancellationToken cancellationToken)
     {
         var member =
@@ -29,7 +29,7 @@ public class DeactivateMemberCommandHandler
         if (member is null)
             return false;
 
-        member.Deactivate();
+        member.Delete();
 
         await _memberRepository.UpdateAsync(member);
 
