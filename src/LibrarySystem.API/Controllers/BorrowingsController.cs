@@ -1,6 +1,7 @@
 ﻿using LibrarySystem.Application.Features.Borrowings.Commands.BorrowBook;
 using LibrarySystem.Application.Features.Borrowings.Commands.ReturnBook;
 using LibrarySystem.Application.Features.Borrowings.Queries.GetAllBorrowings;
+using LibrarySystem.Application.Features.Borrowings.Queries.GetBorrowingById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -50,5 +51,17 @@ public class BorrowingsController : ControllerBase
 
         return Ok(borrowings);
 
+    }
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        var borrowing =
+            await _mediator.Send(
+                new GetBorrowingByIdQuery(id));
+
+        if (borrowing is null)
+            return NotFound();
+
+        return Ok(borrowing);
     }
 }

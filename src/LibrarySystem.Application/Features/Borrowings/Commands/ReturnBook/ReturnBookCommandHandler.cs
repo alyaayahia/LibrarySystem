@@ -39,6 +39,9 @@ public class ReturnBookCommandHandler
         if (borrowing.Book is null)
             return Result<decimal>.Failure(
                 "Book not found");
+        if (borrowing.Status != LibrarySystem.Domain.Entities.BorrowingStatus.Borrowed)
+            return Result<decimal>.Failure(
+                "Borrowing already closed");
 
         borrowing.Return();
 
