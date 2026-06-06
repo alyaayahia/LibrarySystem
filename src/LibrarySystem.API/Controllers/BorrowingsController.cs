@@ -1,4 +1,5 @@
 ﻿using LibrarySystem.Application.Features.Borrowings.Commands.BorrowBook;
+using LibrarySystem.Application.Features.Borrowings.Commands.ReturnBook;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,6 +22,18 @@ public class BorrowingsController : ControllerBase
     {
         var result =
             await _mediator.Send(command);
+
+        if (result.IsFailure)
+            return BadRequest(result.Error);
+
+        return Ok(result.Value);
+    }
+    [HttpPut("{id}/return")]
+    public async Task<IActionResult> ReturnBook(Guid id)
+    {
+        var result =
+            await _mediator.Send(
+                new ReturnBookCommand(id));
 
         if (result.IsFailure)
             return BadRequest(result.Error);
